@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2020-05-05 21:16
  */
 @SpringBootApplication
-public class SpringbootSecurityAuth2Application {
+public class LemonOAuth2Application {
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootSecurityAuth2Application.class, args);
+        SpringApplication.run(LemonOAuth2Application.class, args);
     }
 }
