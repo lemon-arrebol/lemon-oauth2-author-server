@@ -17,17 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description: 自定义消息转换器，该配置是将json与form-data之间数据相互转换
+ * @author houjuntao
+ * @description 自定义消息转换器，该配置是将json与form-data之间数据相互转换
+ * @date 2020-05-05 21:34
  */
 @Configuration
 @ConditionalOnClass(JSON.class)
 public class HttpMessageConverterConfig {
 
     /**
-     * @return StringHttpMessageConverter
-     * @descrption: http消息转换器。
-     * @author Rong.Jia
-     * @date 2019/01/07 25:16:44
+     * @param
+     * @return org.springframework.http.converter.StringHttpMessageConverter
+     * @description http消息转换器
+     * @author houjuntao
+     * @date 2020-05-05 21:34
      */
     @Bean
     public StringHttpMessageConverter stringHttpMessageConverter() {

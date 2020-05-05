@@ -14,9 +14,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description: redis 工具类
- * @author: Rong.Jia
- * @date: 2018年6月13日 22:58:22
+ * @author houjuntao
+ * @description redis 工具类
+ * @date 2020-05-05 21:36
  */
 @Slf4j
 @Component
@@ -27,10 +27,12 @@ public class RedisUtil {
 
 
     /**
-     * @param key  键
-     * @param time 时间(秒)
+     * @param key
+     * @param time
      * @return boolean
-     * @description: 指定缓存失效时间
+     * @description 指定缓存失效时间
+     * @author houjuntao
+     * @date 2020-05-05 21:36
      */
     public boolean expire(String key, long time) {
         try {
@@ -45,18 +47,22 @@ public class RedisUtil {
     }
 
     /**
-     * @param key 键 不能为null
-     * @return 时间(秒) 返回0代表为永久有效
-     * @description: 根据key 获取过期时间
+     * @param key
+     * @return long
+     * @description 根据key 获取过期时间
+     * @author houjuntao
+     * @date 2020-05-05 21:36
      */
     public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
     /**
-     * @param key 键
-     * @return true 存在 false不存在
-     * @description: 判断key是否存在
+     * @param key
+     * @return boolean
+     * @description 判断key是否存在
+     * @author houjuntao
+     * @date 2020-05-05 21:36
      */
     public boolean exists(String key) {
         try {
@@ -68,8 +74,11 @@ public class RedisUtil {
     }
 
     /**
-     * @param key 可以传一个值 或多个
-     * @description: 删除缓存
+     * @param key
+     * @return void
+     * @description 删除缓存
+     * @author houjuntao
+     * @date 2020-05-05 21:36
      */
     @SuppressWarnings("unchecked")
     public void deleteCache(String... key) {
@@ -97,20 +106,24 @@ public class RedisUtil {
     }
 
     /**
-     * @param key 键
-     * @return Object value
-     * @description: 根据key获取value
+     * @param key
+     * @return java.lang.Object
+     * @description 根据key获取value
+     * @author houjuntao
+     * @date 2020-05-05 21:36
      */
     public Object getValueByKey(String key) {
         return key == null ? null : redisTemplate.opsForValue().get(key);
     }
 
     /**
-     * @param key    键
-     * @param value  值
+     * @param key
+     * @param value
      * @param expire 时间(秒) time要大于0 如果expire小于等于0 将设置无限期
-     * @return true成功 false失败
-     * @description: 普通缓存放入
+     * @return void
+     * @description
+     * @author houjunttrue成功 false失败ao
+     * @date 2020-05-05 21:36
      */
     public void set(String key, Object value, long expire) {
         redisTemplate.opsForValue().set(key, value);
@@ -120,22 +133,24 @@ public class RedisUtil {
     }
 
     /**
-     * 普通缓存放入并设置时间
-     *
-     * @param key   键
-     * @param value 值
-     * @return true成功 false 失败
+     * @param key
+     * @param value
+     * @return void
+     * @description 普通缓存放入并设置时间
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public void set(String key, Object value) {
         set(key, value, 3600L);
     }
 
     /**
-     * 递增
-     *
-     * @param key   键
-     * @param delta 要增加几(大于0)
-     * @return
+     * @param key
+     * @param delta
+     * @return long
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public long increasing(String key, long delta) {
         if (delta < 0) {
@@ -145,11 +160,12 @@ public class RedisUtil {
     }
 
     /**
-     * 递减
-     *
-     * @param key   键
-     * @param delta 要减少几(小于0)
-     * @return
+     * @param key
+     * @param delta
+     * @return long
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public long decr(String key, long delta) {
         if (delta < 0) {
@@ -161,32 +177,35 @@ public class RedisUtil {
     //================================Map=================================
 
     /**
-     * HashGet
-     *
-     * @param key  键 不能为null
-     * @param item 项 不能为null
-     * @return 值
+     * @param key
+     * @param item
+     * @return java.lang.Object
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public Object hget(String key, String item) {
         return redisTemplate.opsForHash().get(key, item);
     }
 
     /**
-     * 获取hashKey对应的所有键值
-     *
-     * @param key 键
-     * @return 对应的多个键值
+     * @param key
+     * @return java.util.Map<java.lang.Object, java.lang.Object>
+     * @description 获取hashKey对应的所有键值
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public Map<Object, Object> hmget(String key) {
         return redisTemplate.opsForHash().entries(key);
     }
 
     /**
-     * HashSet
-     *
-     * @param key 键
-     * @param map 对应多个键值
-     * @return true 成功 false 失败
+     * @param key
+     * @param map
+     * @return boolean
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public boolean hmset(String key, Map<String, Object> map) {
         try {
@@ -199,12 +218,13 @@ public class RedisUtil {
     }
 
     /**
-     * HashSet 并设置时间
-     *
-     * @param key  键
-     * @param map  对应多个键值
-     * @param time 时间(秒)
-     * @return true成功 false失败
+     * @param key
+     * @param map
+     * @param time
+     * @return boolean
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public boolean hmset(String key, Map<String, Object> map, long time) {
         try {
@@ -220,12 +240,13 @@ public class RedisUtil {
     }
 
     /**
-     * 向一张hash表中放入数据,如果不存在将创建
-     *
-     * @param key   键
-     * @param item  项
-     * @param value 值
-     * @return true 成功 false失败
+     * @param key
+     * @param item
+     * @param value
+     * @return boolean
+     * @description 向一张hash表中放入数据, 如果不存在将创建
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public boolean hset(String key, String item, Object value) {
         try {
@@ -238,13 +259,14 @@ public class RedisUtil {
     }
 
     /**
-     * 向一张hash表中放入数据,如果不存在将创建
-     *
-     * @param key   键
-     * @param item  项
-     * @param value 值
-     * @param time  时间(秒)  注意:如果已存在的hash表有时间,这里将会替换原有的时间
-     * @return true 成功 false失败
+     * @param key
+     * @param item
+     * @param value
+     * @param time
+     * @return boolean
+     * @description 向一张hash表中放入数据, 如果不存在将创建
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public boolean hset(String key, String item, Object value, long time) {
         try {
@@ -260,45 +282,50 @@ public class RedisUtil {
     }
 
     /**
-     * 删除hash表中的值
-     *
-     * @param key  键 不能为null
-     * @param item 项 可以使多个 不能为null
+     * @param key
+     * @param item
+     * @return void
+     * @description 删除hash表中的值
+     * @author houjuntao
+     * @date 2020-05-05 21:37
      */
     public void deleteValueByKey(String key, Object... item) {
         redisTemplate.opsForHash().delete(key, item);
     }
 
     /**
-     * 判断hash表中是否有该项的值
-     *
-     * @param key  键 不能为null
-     * @param item 项 不能为null
-     * @return true 存在 false不存在
+     * @param key
+     * @param item
+     * @return boolean
+     * @description 判断hash表中是否有该项的值
+     * @author houjuntao
+     * @date 2020-05-05 21:38
      */
     public boolean hHasKey(String key, String item) {
         return redisTemplate.opsForHash().hasKey(key, item);
     }
 
     /**
-     * hash递增 如果不存在,就会创建一个 并把新增后的值返回
-     *
-     * @param key  键
-     * @param item 项
-     * @param by   要增加几(大于0)
-     * @return
+     * @param key
+     * @param item
+     * @param by
+     * @return double
+     * @description hash递增 如果不存在,就会创建一个 并把新增后的值返回
+     * @author houjuntao
+     * @date 2020-05-05 21:38
      */
     public double hincr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, by);
     }
 
     /**
-     * hash递减
-     *
-     * @param key  键
-     * @param item 项
-     * @param by   要减少记(小于0)
-     * @return
+     * @param key
+     * @param item
+     * @param by
+     * @return double
+     * @description
+     * @author houjuntao
+     * @date 2020-05-05 21:38
      */
     public double hdecr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, -by);
@@ -307,10 +334,11 @@ public class RedisUtil {
     //============================set=============================
 
     /**
-     * 根据key获取Set中的所有值
-     *
-     * @param key 键
-     * @return
+     * @param key
+     * @return java.util.Set<java.lang.Object>
+     * @description 根据key获取Set中的所有值
+     * @author houjuntao
+     * @date 2020-05-05 21:38
      */
     public Set<Object> sGet(String key) {
         try {

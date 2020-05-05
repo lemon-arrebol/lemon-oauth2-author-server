@@ -8,47 +8,49 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @param <T>
- * @description: 抽取持久层通用方法
- * @author: Rong.Jia
- * @date: 2019/01/14 17:00
+ * @author houjuntao
+ * @description 抽取持久层通用方法
+ * @date 2020-05-05 21:33
  */
 @NoRepositoryBean
 public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecificationExecutor<T> {
 
     /**
-     * @param id 信息唯一标识
-     * @return T 获取的信息
-     * @description: 根据id 获取信息
-     * @author: Rong.Jia
-     * @date: 2019/01/14 17:00
+     * @param id
+     * @return java.util.Optional<T>
+     * @description 根据id 获取信息
+     * @author houjuntao
+     * @date 2020-05-05 21:33
      */
     @Override
     Optional<T> findById(Integer id);
 
     /**
-     * @return 将获取的信息封装到List中 返回
-     * @description: 获取所有的信息
-     * @author: Rong.Jia
-     * @date: 2019/01/14 17:00
+     * @param
+     * @return java.util.List<T>
+     * @description 获取所有的信息
+     * @author houjuntao
+     * @date 2020-05-05 21:33
      */
     @Override
     List<T> findAll();
 
     /**
-     * @param entity 实体类信息
-     * @description: 删除指定的信息
-     * @author: Rong.Jia
-     * @date: 2019/01/14 17:00
+     * @param entity
+     * @return void
+     * @description 删除指定的信息
+     * @author houjuntao
+     * @date 2020-05-05 21:33
      */
     @Override
     void delete(T entity);
 
     /**
-     * @param id 唯一标识
-     * @description: 根据id 删除信息
-     * @author: Rong.Jia
-     * @date: 2019/01/14 17:00
+     * @param id
+     * @return void
+     * @description 根据id 删除信息
+     * @author houjuntao
+     * @date 2020-05-05 21:33
      */
     @Override
     void deleteById(Integer id);

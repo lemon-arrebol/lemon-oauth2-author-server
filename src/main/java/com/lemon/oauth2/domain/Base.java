@@ -9,9 +9,9 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
- * @author Rong.Jia
- * @description:
- * @date 2019/02/19 18:01:22
+ * @author houjuntao
+ * @description
+ * @date 2020-05-05 21:34
  */
 @Data
 @MappedSuperclass

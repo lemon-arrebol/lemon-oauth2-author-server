@@ -3,9 +3,9 @@ package com.lemon.oauth2.enums;
 import lombok.ToString;
 
 /**
- * @author Rong.Jia
- * @description: 数据信息状态枚举类
- * @date 2019/02/19 15:54:22
+ * @author houjuntao
+ * @description 数据信息状态枚举类
+ * @date 2020-05-05 21:35
  */
 @ToString
 public enum ResponseEnum {
@@ -23,13 +23,11 @@ public enum ResponseEnum {
     REFRESH_TOKEN_INVALID(1002, "refresh_token无效"),
     INSUFFICIENT_PERMISSIONS(1003, "该用户权限不足以访问该资源接口"),
     UNAUTHORIZED(1004, "访问此资源需要完全的身份验证"),
-
-
     /**
      * 5000 表示用户提示信息
      */
-    INCORRECT_PARAMS(5000, "参数不正确"),
-    ;
+    INCORRECT_PARAMS(5000, "参数不正确");
+
     private Integer code;
     private String message;
 
