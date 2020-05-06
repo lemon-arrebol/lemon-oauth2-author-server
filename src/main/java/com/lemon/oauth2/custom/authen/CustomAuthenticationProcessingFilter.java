@@ -18,6 +18,7 @@ import java.io.IOException;
 /**
  * @author lemon
  * @description 自定义登录请求过滤器
+ * 参考 {@link org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter}
  * {@link com.lemon.oauth2.config.WebSecurityConfig#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)} 配置
  * http.addFilterBefore(customAuthenticationProcessingFilter, UsernamePasswordAuthenticationFilter.class);
  * @date 2020-05-05 21:18
@@ -45,7 +46,7 @@ public class CustomAuthenticationProcessingFilter extends AbstractAuthentication
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
-        if (this.postOnly && !httpServletRequest.getMethod().equals("POST")) {
+        if (this.postOnly && !"POST".equals(httpServletRequest.getMethod())) {
             throw new AuthenticationServiceException("Authentication method not supported: " + httpServletRequest.getMethod());
         } else {
             String username = this.obtainUsername(httpServletRequest);

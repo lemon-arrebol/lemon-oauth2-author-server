@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author houjuntao
+ * @author lemon
  * @description redis 工具类
  * @date 2020-05-05 21:36
  */
@@ -31,7 +31,7 @@ public class RedisUtil {
      * @param time
      * @return boolean
      * @description 指定缓存失效时间
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:36
      */
     public boolean expire(String key, long time) {
@@ -50,7 +50,7 @@ public class RedisUtil {
      * @param key
      * @return long
      * @description 根据key 获取过期时间
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:36
      */
     public long getExpire(String key) {
@@ -61,7 +61,7 @@ public class RedisUtil {
      * @param key
      * @return boolean
      * @description 判断key是否存在
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:36
      */
     public boolean exists(String key) {
@@ -77,7 +77,7 @@ public class RedisUtil {
      * @param key
      * @return void
      * @description 删除缓存
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:36
      */
     @SuppressWarnings("unchecked")
@@ -109,7 +109,7 @@ public class RedisUtil {
      * @param key
      * @return java.lang.Object
      * @description 根据key获取value
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:36
      */
     public Object getValueByKey(String key) {
@@ -137,7 +137,7 @@ public class RedisUtil {
      * @param value
      * @return void
      * @description 普通缓存放入并设置时间
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public void set(String key, Object value) {
@@ -149,7 +149,7 @@ public class RedisUtil {
      * @param delta
      * @return long
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public long increasing(String key, long delta) {
@@ -164,7 +164,7 @@ public class RedisUtil {
      * @param delta
      * @return long
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public long decr(String key, long delta) {
@@ -181,7 +181,7 @@ public class RedisUtil {
      * @param item
      * @return java.lang.Object
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public Object hget(String key, String item) {
@@ -192,7 +192,7 @@ public class RedisUtil {
      * @param key
      * @return java.util.Map<java.lang.Object, java.lang.Object>
      * @description 获取hashKey对应的所有键值
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public Map<Object, Object> hmget(String key) {
@@ -204,7 +204,7 @@ public class RedisUtil {
      * @param map
      * @return boolean
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public boolean hmset(String key, Map<String, Object> map) {
@@ -223,7 +223,7 @@ public class RedisUtil {
      * @param time
      * @return boolean
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public boolean hmset(String key, Map<String, Object> map, long time) {
@@ -245,7 +245,7 @@ public class RedisUtil {
      * @param value
      * @return boolean
      * @description 向一张hash表中放入数据, 如果不存在将创建
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public boolean hset(String key, String item, Object value) {
@@ -265,7 +265,7 @@ public class RedisUtil {
      * @param time
      * @return boolean
      * @description 向一张hash表中放入数据, 如果不存在将创建
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public boolean hset(String key, String item, Object value, long time) {
@@ -286,7 +286,7 @@ public class RedisUtil {
      * @param item
      * @return void
      * @description 删除hash表中的值
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:37
      */
     public void deleteValueByKey(String key, Object... item) {
@@ -298,7 +298,7 @@ public class RedisUtil {
      * @param item
      * @return boolean
      * @description 判断hash表中是否有该项的值
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:38
      */
     public boolean hHasKey(String key, String item) {
@@ -311,7 +311,7 @@ public class RedisUtil {
      * @param by
      * @return double
      * @description hash递增 如果不存在,就会创建一个 并把新增后的值返回
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:38
      */
     public double hincr(String key, String item, double by) {
@@ -324,7 +324,7 @@ public class RedisUtil {
      * @param by
      * @return double
      * @description
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:38
      */
     public double hdecr(String key, String item, double by) {
@@ -337,7 +337,7 @@ public class RedisUtil {
      * @param key
      * @return java.util.Set<java.lang.Object>
      * @description 根据key获取Set中的所有值
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:38
      */
     public Set<Object> sGet(String key) {

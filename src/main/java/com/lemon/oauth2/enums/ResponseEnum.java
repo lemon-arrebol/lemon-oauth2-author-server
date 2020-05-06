@@ -3,7 +3,7 @@ package com.lemon.oauth2.enums;
 import lombok.ToString;
 
 /**
- * @author houjuntao
+ * @author lemon
  * @description 数据信息状态枚举类
  * @date 2020-05-05 21:35
  */

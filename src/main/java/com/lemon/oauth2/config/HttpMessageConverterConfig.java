@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author houjuntao
+ * @author lemon
  * @description 自定义消息转换器，该配置是将json与form-data之间数据相互转换
  * @date 2020-05-05 21:34
  */
@@ -29,7 +29,7 @@ public class HttpMessageConverterConfig {
      * @param
      * @return org.springframework.http.converter.StringHttpMessageConverter
      * @description http消息转换器
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:34
      */
     @Bean

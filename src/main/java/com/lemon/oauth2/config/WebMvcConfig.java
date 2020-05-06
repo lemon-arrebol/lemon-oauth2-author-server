@@ -1,8 +1,8 @@
 package com.lemon.oauth2.config;
 
+import com.lemon.oauth2.interceptor.WebAccessInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,12 +17,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
-    private HandlerInterceptor handlerInterceptor;
+    private WebAccessInterceptor webAccessInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 可添加多个
-        registry.addInterceptor(this.handlerInterceptor);
+        registry.addInterceptor(this.webAccessInterceptor);
     }
 
     @Override

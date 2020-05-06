@@ -8,13 +8,18 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author lemon
+ * @description
+ * @date 2020-05-06 20:52
+ */
 @Slf4j
 @Component
 public class WebAccessInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
         if (log.isDebugEnabled()) {
-            log.debug("before request url is [{}] starting", httpServletRequest.getRequestURL());
+            log.debug("preHandle request url is [{}] starting", httpServletRequest.getRequestURL());
         }
 
         return true;
@@ -23,14 +28,14 @@ public class WebAccessInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object, ModelAndView modelAndView) throws Exception {
         if (log.isDebugEnabled()) {
-            log.debug("pathInfo is {}, viewName is {}, {}", httpServletRequest.getPathInfo(), modelAndView, object);
+            log.debug("postHandle request url is {}, viewName is {}, {}", httpServletRequest.getRequestURL(), modelAndView, object);
         }
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object, Exception e) throws Exception {
         if (log.isDebugEnabled()) {
-            log.debug("after request url is [{}] completion", httpServletRequest.getRequestURL());
+            log.debug("afterCompletion request url is [{}] completion", httpServletRequest.getRequestURL());
         }
     }
 }

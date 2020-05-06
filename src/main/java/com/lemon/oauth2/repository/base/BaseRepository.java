@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author houjuntao
+ * @author lemon
  * @description 抽取持久层通用方法
  * @date 2020-05-05 21:33
  */
@@ -19,7 +19,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecifi
      * @param id
      * @return java.util.Optional<T>
      * @description 根据id 获取信息
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:33
      */
     @Override
@@ -29,7 +29,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecifi
      * @param
      * @return java.util.List<T>
      * @description 获取所有的信息
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:33
      */
     @Override
@@ -39,7 +39,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecifi
      * @param entity
      * @return void
      * @description 删除指定的信息
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:33
      */
     @Override
@@ -49,7 +49,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer>, JpaSpecifi
      * @param id
      * @return void
      * @description 根据id 删除信息
-     * @author houjuntao
+     * @author lemon
      * @date 2020-05-05 21:33
      */
     @Override

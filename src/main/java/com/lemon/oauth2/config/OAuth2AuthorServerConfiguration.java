@@ -1,5 +1,6 @@
 package com.lemon.oauth2.config;
 
+import com.lemon.oauth2.interceptor.WebAccessInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -73,6 +74,9 @@ public class OAuth2AuthorServerConfiguration extends AuthorizationServerConfigur
     @Qualifier("customClientDetailsService")
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
+    private WebAccessInterceptor webAccessInterceptor;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(this.clientDetailsService);
@@ -86,6 +90,7 @@ public class OAuth2AuthorServerConfiguration extends AuthorizationServerConfigur
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         // token信息存到redis
         endpoints
+                .addInterceptor(this.webAccessInterceptor)
                 /*
                  * false，每次通过refresh_token获得access_token时，也会刷新refresh_token；也就是说，会返回全新的access_token与refresh_token。
                  * true，只返回新的access_token，refresh_token不变。
