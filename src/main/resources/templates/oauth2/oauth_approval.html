@@ -52,7 +52,7 @@
                                                                       th:title="${scopeEnty.key}"
                                                                       th:value="${scopeEnty.value} ? true : false"
                                                                       th:type="checkbox"
-                                                                      th:onclick="|javascript: input = document.getElementById('${scopeEnty.key}'); input.value = input.checked;|"
+                                                                      th:onclick="javascript: input = document.getElementById([[${scopeEnty.key}]]); input.value = input.checked;"
                                                                       th:checked="${scopeEnty.value}"/>
                         </div>
                     </li>
