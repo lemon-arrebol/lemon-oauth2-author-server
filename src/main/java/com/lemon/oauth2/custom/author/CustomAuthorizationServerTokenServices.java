@@ -73,7 +73,7 @@ public class CustomAuthorizationServerTokenServices implements AuthorizationServ
     @Override
     public void afterPropertiesSet() throws Exception {
         this.tokenServices.setRefreshTokenValiditySeconds(this.refreshTokenValiditySeconds);
-        this.tokenServices.setRefreshTokenValiditySeconds(this.accessTokenValiditySeconds);
+        this.tokenServices.setAccessTokenValiditySeconds(this.accessTokenValiditySeconds);
         this.tokenServices.setSupportRefreshToken(this.supportRefreshToken);
         this.tokenServices.setReuseRefreshToken(this.reuseRefreshToken);
         this.tokenServices.setTokenStore(this.tokenStore);
