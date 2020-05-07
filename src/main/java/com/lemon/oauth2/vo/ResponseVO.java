@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Zhifeng.Zeng
- * @description: 数据格式返回统一
- * @date 2019/02/19 16:00:22
+ * @description 数据格式返回统一
+ * @author houjuntao
+ * @date 2020-05-07 19:37
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
