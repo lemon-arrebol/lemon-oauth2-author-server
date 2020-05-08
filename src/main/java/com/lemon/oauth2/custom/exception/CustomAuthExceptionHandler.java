@@ -21,8 +21,8 @@ import java.io.IOException;
  * @description 自定义未授权 token无效 权限不足返回信息处理类
  * @date 2020-05-02 21:31
  */
-@Component
 @Slf4j
+@Component
 public class CustomAuthExceptionHandler implements AuthenticationEntryPoint, AccessDeniedHandler {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {

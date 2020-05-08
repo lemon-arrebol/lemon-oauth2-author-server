@@ -1,6 +1,9 @@
 OAuth2简易实战（一）-四种模式 https://www.cnblogs.com/sky-chen/archive/2019/03/13/10523882.html
-
 Spring Security OAuth2 开发指南 https://www.oschina.net/translate/spring-security-oauth-docs-oauth2?print
+
+Jasypt Spring Boot starter https://github.com/ulisesbocchio/jasypt-spring-boot
+Spring Boot学习笔记（五）——Jasypt加解密篇 https://blog.csdn.net/Mr_Megamind/article/details/102852924
+加密Spring Boot中的application.properties http://www.imooc.com/article/303907
 
 自动授权
 数据库

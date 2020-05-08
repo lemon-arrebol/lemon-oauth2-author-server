@@ -1,3 +1,23 @@
+lemon:
+  oauth2:
+    jwt:
+      keystorePath: classpath:jwt/keystore.jks
+      #      keystorePassword: mypass
+      keystorePassword: '{ENC}oxy3zSD6rNpqlTByMsxOcQ=='
+      keystoreAlias: mytest
+      publicKeyPath: classpath:jwt/publicKey.txt
+      privateKeyPath: classpath:jwt/privateKey.txt
+    token:
+      format: jwt
+
+jasypt:
+  encryptor:
+    property:
+      prefix: '{ENC}'
+      suffix: ''
+    password: qwertyuiop
+    algorithm: PBEWithMD5AndDES
+
 server:
   port: 8080
   host: localhost
@@ -19,8 +39,9 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/oauth2?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
-    password: mcdull
-    schema: classpath:oauth2.sql
+    #    password: mcdull
+    password: '{ENC}2Zk0TdMIqbYDd/OaalmWMQ=='
+    schema: classpath:sql/oauth2.sql
     sql-script-encoding: utf-8
     initialization-mode: always
     driver-class-name: com.mysql.jdbc.Driver

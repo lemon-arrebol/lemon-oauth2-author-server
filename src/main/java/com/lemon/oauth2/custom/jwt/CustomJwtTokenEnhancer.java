@@ -1,22 +1,25 @@
 package com.lemon.oauth2.custom.jwt;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.security.jwt.crypto.sign.SignatureVerifier;
-import org.springframework.security.jwt.crypto.sign.Signer;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtClaimsSetVerifier;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.FileCopyUtils;
 
-import java.security.KeyPair;
 import java.util.Map;
 
 /**
@@ -27,37 +30,59 @@ import java.util.Map;
 @Slf4j
 @Component("customTokenEnhancer")
 @ConditionalOnProperty(name = "lemon.oauth2.token.format", havingValue = "jwt")
-public class CustomJwtTokenEnhancer extends JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConverter, InitializingBean {
-    @Value("${lemon.oauth2.jwt.signingKey:}")
-    private String signingKey;
+public class CustomJwtTokenEnhancer extends JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConverter, InitializingBean, ResourceLoaderAware {
+    @Value("${lemon.oauth2.jwt.keystorePath:classpath:jwt/keystore.jks}")
+    private String keystorePath;
 
-    @Value("${lemon.oauth2.jwt.verifierKey:}")
-    private String verifierKey;
+    @Value("${lemon.oauth2.jwt.keystorePassword:}")
+    private String keystorePassword;
 
-    private Signer signer;
+    @Value("${lemon.oauth2.jwt.keystoreAlias:}")
+    private String keystoreAlias;
 
-    private SignatureVerifier verifier;
+    @Value("${lemon.oauth2.jwt.publicKeyPath:classpath:jwt/publicKey.txt}")
+    private String publicKeyPath;
 
-    private KeyPair keyPair;
-
-    private JwtClaimsSetVerifier jwtClaimsSetVerifier;
+    @Value("${lemon.oauth2.jwt.privateKeyPath:classpath:jwt/privateKey.txt}")
+    private String privateKeyPath;
 
     @Autowired
     @Qualifier("customAccessTokenConverter")
     private AccessTokenConverter accessTokenConverter;
 
+    private ResourceLoader resourceLoader;
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
-//        this.jwtAccessTokenConverter.setAccessTokenConverter(this.accessTokenConverter);
-//        // PRIVATE KEY
-//        this.jwtAccessTokenConverter.setSigningKey(this.signingKey);
-//        // PUBLIC KEY
-//        this.jwtAccessTokenConverter.setVerifierKey(this.verifierKey);
-//        this.jwtAccessTokenConverter.setSigner(this.signer);
-//        this.jwtAccessTokenConverter.setVerifier(this.verifier);
-//        this.jwtAccessTokenConverter.setKeyPair(this.keyPair);
-//        this.jwtAccessTokenConverter.setJwtClaimsSetVerifier(this.jwtClaimsSetVerifier);
+        boolean exist = false;
+        Resource resource;
 
+        if (StringUtils.isNotBlank(this.keystorePath) && StringUtils.isNotBlank(this.keystorePassword) && StringUtils.isNotBlank(this.keystoreAlias)) {
+            log.info("读取keystore {}", this.keystorePath);
+
+            exist = true;
+            resource = this.resourceLoader.getResource(this.keystorePath);
+            KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(resource, this.keystorePassword.toCharArray());
+            super.setKeyPair(keyStoreKeyFactory.getKeyPair(this.keystoreAlias));
+        } else if (StringUtils.isNotBlank(this.publicKeyPath) && StringUtils.isNotBlank(this.privateKeyPath)) {
+            log.info("读取publicKey {}, privateKey {}", this.publicKeyPath, this.privateKeyPath);
+            exist = true;
+            resource = this.resourceLoader.getResource(this.publicKeyPath);
+            String publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+            super.setVerifierKey(publicKey);
+
+            resource = this.resourceLoader.getResource(this.privateKeyPath);
+            String privateKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+            super.setSigningKey(privateKey);
+        }
+
+        Assert.isTrue(exist, "Must specify keystore or publickey、privateKey");
+        super.setAccessTokenConverter(this.accessTokenConverter);
         super.afterPropertiesSet();
 
         log.info("初始化JWT Token增强、转换服务类 {}", CustomJwtTokenEnhancer.class);

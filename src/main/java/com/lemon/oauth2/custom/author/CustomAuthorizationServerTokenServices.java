@@ -60,7 +60,7 @@ public class CustomAuthorizationServerTokenServices implements AuthorizationServ
     @Qualifier("customClientDetailsService")
     private ClientDetailsService clientDetailsService;
 
-    private DefaultTokenServices tokenServices = new DefaultTokenServices();
+    private DefaultTokenServices tokenServices;
 
     /**
      * @return void
@@ -72,6 +72,7 @@ public class CustomAuthorizationServerTokenServices implements AuthorizationServ
      */
     @Override
     public void afterPropertiesSet() throws Exception {
+        this.tokenServices = new DefaultTokenServices();
         this.tokenServices.setRefreshTokenValiditySeconds(this.refreshTokenValiditySeconds);
         this.tokenServices.setAccessTokenValiditySeconds(this.accessTokenValiditySeconds);
         this.tokenServices.setSupportRefreshToken(this.supportRefreshToken);
