@@ -4,6 +4,7 @@ Spring Security OAuth2 开发指南 https://www.oschina.net/translate/spring-sec
 Jasypt Spring Boot starter https://github.com/ulisesbocchio/jasypt-spring-boot
 Spring Boot学习笔记（五）——Jasypt加解密篇 https://blog.csdn.net/Mr_Megamind/article/details/102852924
 加密Spring Boot中的application.properties http://www.imooc.com/article/303907
+spring cloud实战与思考（四） JWT之Token主动失效 https://blog.csdn.net/weixin_30664051/article/details/96387918
 
 自动授权
 数据库

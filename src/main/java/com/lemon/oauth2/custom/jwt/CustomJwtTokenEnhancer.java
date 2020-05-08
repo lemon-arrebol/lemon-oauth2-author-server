@@ -10,7 +10,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.util.JsonParser;
+import org.springframework.security.oauth2.common.util.JsonParserFactory;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -21,6 +24,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.FileCopyUtils;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author lemon
@@ -51,6 +55,8 @@ public class CustomJwtTokenEnhancer extends JwtAccessTokenConverter implements T
     private AccessTokenConverter accessTokenConverter;
 
     private ResourceLoader resourceLoader;
+
+    private JsonParser objectMapper = JsonParserFactory.create();
 
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
@@ -88,9 +94,24 @@ public class CustomJwtTokenEnhancer extends JwtAccessTokenConverter implements T
         log.info("初始化JWT Token增强、转换服务类 {}", CustomJwtTokenEnhancer.class);
     }
 
+    /**
+     * @param oAuth2AccessToken
+     * @param oAuth2Authentication
+     * @return org.springframework.security.oauth2.common.OAuth2AccessToken
+     * @description 根据tokenType生成公私钥
+     * @author houjuntao
+     * @date 2020-05-08 13:20
+     */
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
-        OAuth2AccessToken newOAuth2AccessToken = super.enhance(oAuth2AccessToken, oAuth2Authentication);
+        if (log.isDebugEnabled()) {
+            log.debug("grant_type[{}] Principal[{}]", oAuth2Authentication.getOAuth2Request().getRequestParameters().get("grant_type"), oAuth2Authentication.getPrincipal());
+        }
+
+        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(oAuth2AccessToken);
+        // 根据 grant_type 为Client或User分配一个随机字符串，当密码修改或者已办法token失效时生成一个新的随机字符串
+        accessToken.getAdditionalInformation().put("tagId", UUID.randomUUID().toString());
+        OAuth2AccessToken newOAuth2AccessToken = super.enhance(accessToken, oAuth2Authentication);
 
         if (log.isDebugEnabled()) {
             log.debug("原始Token[{}] 转换为JWT[{}]", oAuth2AccessToken.getValue(), newOAuth2AccessToken.getValue());
@@ -113,4 +134,50 @@ public class CustomJwtTokenEnhancer extends JwtAccessTokenConverter implements T
     public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
         return super.extractAuthentication(map);
     }
+
+    /**
+     * @param token
+     * @return java.util.Map<java.lang.String, java.lang.Object>
+     * @description 自定义JWT解码
+     * @author houjuntao
+     * @date 2020-05-08 13:16
+     */
+//    @Override
+//    protected Map<String, Object> decode(String token) {
+//        try {
+//            Jwt jwt = JwtHelper.decodeAndVerify(token, this.verifier);
+//            String claimsStr = jwt.getClaims();
+//            Map<String, Object> claims = this.objectMapper.parseMap(claimsStr);
+//            if (claims.containsKey("exp") && claims.get("exp") instanceof Integer) {
+//                Integer intValue = (Integer)claims.get("exp");
+//                claims.put("exp", new Long((long)intValue));
+//            }
+//
+//            this.getJwtClaimsSetVerifier().verify(claims);
+//            return claims;
+//        } catch (Exception var6) {
+//            throw new InvalidTokenException("Cannot convert access token to JSON", var6);
+//        }
+//    }
+
+    /**
+     * @param accessToken
+     * @param authentication
+     * @return java.lang.String
+     * @description 自定义JWT编码
+     * @author houjuntao
+     * @date 2020-05-08 13:16
+     */
+//    @Override
+//    protected String encode(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+//        String content;
+//        try {
+//            content = this.objectMapper.formatMap(this.accessTokenConverter.convertAccessToken(accessToken, authentication));
+//        } catch (Exception var5) {
+//            throw new IllegalStateException("Cannot convert access token to JSON", var5);
+//        }
+//
+//        String token = JwtHelper.encode(content, this.signer).getEncoded();
+//        return token;
+//    }
 }
