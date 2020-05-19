@@ -56,7 +56,7 @@ https://www.a2yy.com/#access_token=dba2c3d6-c85d-4220-a11d-f29d5acf3cdc&token_ty
 GET 请求
 redirect_uri 可以不传，如果注册时只有一个跳转到注册URL，如果是多个必须要指定一个且必须和注册的URL匹配
 scope不指定默认是注册时所有的scope
-http://127.0.0.1:8080/oauth/authorize?client_id=client_1&response_type=code&redirect_uri=https://www.a2yy.com
+http://localhost:8080/oauth/authorize?client_id=client_1&response_type=code&redirect_uri=https://www.a2yy.com
 
 (2) 资源所有者授权
 资源所有者填写认证信息或者已经登录，如果自动授权则直接跳转回应用，否则选择授权信息接着跳转回应用
